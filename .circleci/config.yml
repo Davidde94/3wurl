@@ -9,7 +9,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "2f:dc:22:ea:83:60:33:73:30:6d:a3:7e:98:85:d4:1c"
+            - "0a:12:a4:a4:89:6f:eb:f7:13:01:4d:85:f0:52:ac:cb"
       - run:
           name: Setup
           command: |
@@ -25,4 +25,4 @@ jobs:
                 exit 0
               fi
 
-              ssh -i ~/.ssh/id_rsa_225e5c6ff39dba762644b96a57fa5fb6 -o StrictHostKeyChecking=no -p 14815 app-inertia@main.blackpoint.co "cd Inertia && git fetch --all && git reset --hard origin/master && /usr/local/bin/swift/usr/bin/swift package update && /usr/local/bin/swift/usr/bin/swift build -c release && sudo service inertia restart"
+              ssh -i ~/.ssh/id_rsa_0a12a4a4896febf713014d85f052accb -o StrictHostKeyChecking=no -p 14815 app-banterurl@main.blackpoint.co "cd BanterURL && git fetch --all && git reset --hard origin/master && /usr/local/bin/swift/usr/bin/swift package update && /usr/local/bin/swift/usr/bin/swift build -c release && sudo service banterurl restart"
