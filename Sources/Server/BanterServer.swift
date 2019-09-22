@@ -9,6 +9,8 @@ import Jupiter
 
 public class BanterServer: Server {
     
+    let urlFacade = URLFacade()
+    
     override public func setup(configuration: CoreConfiguration) {
         super.setup(configuration: configuration)
         setupRoutes()
@@ -20,6 +22,9 @@ public class BanterServer: Server {
 extension BanterServer {
     
     func setupRoutes() {
+        
+        let route = Route(.post, url: BanterRoutes.create, function: urlFacade.handleCreateRoute)
+        registerRoute(route)
         
     }
     
