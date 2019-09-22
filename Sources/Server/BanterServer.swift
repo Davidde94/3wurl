@@ -20,10 +20,6 @@ public class BanterServer: Server {
 extension BanterServer {
     
     func setupRoutes() {
-        setupStaticRoutes()
-    }
-    
-    func setupStaticRoutes() {
         
     }
     

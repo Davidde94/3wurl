@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "user": "root",
+    "password": "fdwcsa",
+    "database": "BanterURL",
+    "port": 3306
+}
+
