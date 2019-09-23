@@ -5,14 +5,18 @@ body {
   overflow: none;
   padding: 0;
   margin: 0;
+  font-family: 'Lato', sans-serif;
 }
 
 h1 {
   color: rgba(30,30,151,1);
+  font-weight: 900;
+  font-size: 60pt;
 }
 
 h3 {
   color: rgb(125, 125, 125);
+  font-weight: 300;
 }
 
 #wrapper {
@@ -25,11 +29,11 @@ h3 {
   border-bottom: 1px solid rgba(30,30,151,1);
   padding: 0;
   margin: 0;
-  color: white;
+  color: rgb(160, 160, 160);
   font-size: 20pt;
   outline: none;
   text-align: left;
-  transition: background-color 0.2s
+  transition: background-color 0.2s, color 0.2s;
   display: flex;
   width: 100%;
 }

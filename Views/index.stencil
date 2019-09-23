@@ -12,27 +12,32 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       <script src="public/banter.min.js"></script>
 
-      <link rel="stylesheet" href="public/banter.min.css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="public/banter.min.css">
 
     </head>
 
     <body>
 
-      <div id="wrapper" class="container mt-5">
-        <div class="row">
-          <div class="col">
+      <div id="wrapper" class="container mt-5 pt-5">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-auto">
             <h1>3wurl</h1>
-            <h3>A simple tool to make long, boring URLs memorable</h3>
           </div>
+          <div class="col-4">
+            <h3>A simple tool thats makes long and boring URLs memorable.</h3>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-5 pt-5">
           <div class="col">
-            <p>
-              Paste or type a URL below.
-            </p>
             <form id="mainForm">
               <input type="url" name="url" placeholder="Some URL" />
             </form>
-
+          </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+          <div class="col-auto">
             <div id="resultBox" style='display: none'>
               <p>
                 Your memorabale URL is:
