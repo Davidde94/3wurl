@@ -57,7 +57,7 @@ class URLFacade: Facade {
             
             switch result {
             case .success(let url):
-                let response = CreateURLResponse(url: URL(string: url))
+                let response = CreateURLResponse(url: URL(string: url)!)
                 onComplete(.success(FacadeSuccess(statusCode: .movedPermanently, response: response, headers: ["Location" : url])))
             case .failure(let error):
                 onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
