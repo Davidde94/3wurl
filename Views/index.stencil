@@ -1,9 +1,26 @@
 <html>
 
-    <form method="POST" action="/create" enctype="application/json">
-        <input type="text" name="url" />
-        <input type="submit" />
-    </form>
+    <head>
+
+      <title>Banter URL</title>
+      <meta charset="UTF-8">
+      <meta name="description" content="Something simple to make long URLs memorable">
+      <meta name="keywords" content="banter, url, tiny, bit, blackpoint">
+      <meta name="author" content="David Evans | BlackPoint Limited">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="public/banter.min.js"></script>
+
+    </head>
+
+    <body>
+
+      <form id="mainForm" method="POST" action="/create" enctype="application/json">
+          <input type="text" name="url" />
+          <input type="submit" />
+      </form>
+
       <a id="linkButton"></a>
 
     </body>
