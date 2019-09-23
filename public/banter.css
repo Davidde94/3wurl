@@ -1,37 +1,47 @@
 body {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(360deg, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+  background: white;
   overflow: none;
   padding: 0;
   margin: 0;
 }
 
+h1 {
+  color: rgba(30,30,151,1);
+}
+
+h3 {
+  color: rgb(125, 125, 125);
+}
+
 #wrapper {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0 auto;
 }
 
-#wrapper #mainForm {
+#mainForm input {
   padding: 8px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
-}
-
-input {
-  background-color: rgba(0, 0, 0, 0);
   border: 0;
+  border-bottom: 1px solid rgba(30,30,151,1);
   padding: 0;
   margin: 0;
   color: white;
-  font-size: 30pt;
+  font-size: 20pt;
   outline: none;
-  text-align: center;
+  text-align: left;
+  transition: background-color 0.2s
+  display: flex;
+  width: 100%;
 }
 
-input:focus, input:active {
+#mainForm input:focus, #mainForm input:active {
   outline: none;
+  background-color: white;
+  color: rgba(9,9,121,1);
+}
+
+a, a:visited {
+  color: rgba(30,30,151,1) !important;
+  text-decoration: none;
+  font-size: 14pt;
 }

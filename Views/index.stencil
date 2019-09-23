@@ -13,19 +13,34 @@
       <script src="public/banter.min.js"></script>
 
       <link rel="stylesheet" href="public/banter.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     </head>
 
     <body>
 
-      <div id="wrapper">
+      <div id="wrapper" class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <h1>3wurl</h1>
+            <h3>A simple tool to make long, boring URLs memorable</h3>
+          </div>
+          <div class="col">
+            <p>
+              Paste or type a URL below.
+            </p>
+            <form id="mainForm">
+              <input type="url" name="url" placeholder="Some URL" />
+            </form>
 
-        <form id="mainForm" method="POST" action="/create" enctype="application/json">
-            <input id="urlInput" type="text" name="url" />
-        </form>
-
-        <a id="linkButton"></a>
-
+            <div id="resultBox" style='display: none'>
+              <p>
+                Your memorabale URL is:
+              </p>
+              <a id="linkButton"></a>
+            </div>
+          </div>
+        </div>
       </div>
 
     </body>
