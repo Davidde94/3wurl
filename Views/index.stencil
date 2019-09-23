@@ -1,0 +1,8 @@
+<html>
+
+    <form method="POST" action="/create" enctype="application/json">
+        <input type="text" name="url" />
+        <input type="submit" />
+    </form>
+
+</html>

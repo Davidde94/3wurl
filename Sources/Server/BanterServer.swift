@@ -6,6 +6,8 @@
 //
 
 import Jupiter
+import Kitura
+import KituraStencil
 
 public class BanterServer: Server {
     
@@ -29,6 +31,18 @@ extension BanterServer {
         let visitRoute = Route(.get, url: BanterRoutes.visit, function: urlFacade.handleRedirect)
         registerRoute(visitRoute)
         
+        router.add(templateEngine: StencilTemplateEngine())
+        router.get("/") { (request, response, next) in
+            
+            do {
+                try response.render("index.stencil", context: [:])
+            } catch {
+                print(error)
+            }
+            
+            next()
+            
+        }
     }
     
 }
