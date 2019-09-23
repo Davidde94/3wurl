@@ -26,11 +26,19 @@ class URLFacade: Facade {
         
         let body = try request.read(as: CreateURL.self)
         
-        let banterIdentifier = try identifierProvider.createIdentifier(for: body.url)
-        let responseURL = URL(string: "https://banterurl.blackpoint.co/r")!
-            .appendingPathComponent(banterIdentifier, isDirectory: true)
-        let response = CreateURLResponse(url: responseURL)
-        onComplete(.success(FacadeSuccess(statusCode: .OK, response: response)))
+        try identifierProvider.createIdentifier(for: body.url) { result in
+            
+            switch result {
+            case .failure(let error):
+                onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
+            case .success(let identifier):
+                let responseURL = URL(string: "https://banterurl.blackpoint.co/r")!
+                    .appendingPathComponent(identifier, isDirectory: true)
+                let response = CreateURLResponse(url: responseURL)
+                onComplete(.success(FacadeSuccess(statusCode: .OK, response: response)))
+            }
+            
+        }
         
         
     }
