@@ -26,6 +26,9 @@ extension BanterServer {
         let route = Route(.post, url: BanterRoutes.create, function: urlFacade.handleCreateRoute)
         registerRoute(route)
         
+        let visitRoute = Route(.get, url: BanterRoutes.visit, function: urlFacade.handleRedirect)
+        registerRoute(visitRoute)
+        
     }
     
 }

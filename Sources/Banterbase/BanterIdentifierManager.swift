@@ -59,6 +59,49 @@ public class BanterIdentifierManager {
             
         }
         
+    }
+    
+    public func validateIdentifier(_ identifier: String, onComplete: @escaping (Result<String, Error>) -> Void) {
+        
+        Database.getConnection { result in
+            
+            switch result {
+            case .failure(let error):
+                onComplete(.failure(error))
+            case .success(let connection):
+                self.validateIdentifier(identifier, using: connection, onComplete: onComplete)
+            }
+            
+        }
+        
+        
+    }
+    
+    func validateIdentifier(_ identifier: String, using connection: Connection, onComplete: @escaping (Result<String, Error>) -> Void) {
+        
+        let table = IdentifierTable()
+        let query = Select(table.target, from: table).where(table.identifier == identifier).limit(to: 1)
+        
+        connection.execute(query: query) { result in
+            
+            switch result {
+            
+            case .error(let error):
+                onComplete(.failure(error))
+            case .resultSet(let set):
+                set.nextRow { row, error in
+                    guard let target = row?.first as? String else {
+                        return
+                    }
+                    onComplete(.success(target))
+                }
+            case .success(_):
+                break
+            case .successNoData:
+                break
+            }
+            
+        }
         
     }
     

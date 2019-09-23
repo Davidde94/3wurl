@@ -43,4 +43,21 @@ class URLFacade: Facade {
         
     }
     
+    func handleRedirect(request: RouterRequest, onComplete: @escaping FacadeRouteCallback<String>) throws {
+     
+        let identifier = request.parameters["identifier"]!
+        
+        identifierProvider.validateIdentifier(identifier) { result in
+            
+            switch result {
+            case .success(let url):
+                onComplete(.success(FacadeSuccess(statusCode: .movedPermanently, response: "Moved!", headers: ["Location" : url])))
+            case .failure(let error):
+                onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
+            }
+            
+        }
+        
+    }
+    
 }
