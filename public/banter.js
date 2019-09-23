@@ -10,7 +10,6 @@ $(document).ready(function() {
         json[this.name] = this.value || '';
     });
     json = JSON.stringify(json);
-    console.log(json);
 
     $.ajax({
       type: "POST",
@@ -29,10 +28,13 @@ $(document).ready(function() {
     })
   });
 
-  $("#link").click(function(event) {
-    $(this).focus();
-    $(this).select();
+  $("#link").click(function() {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($("#link").text()).select();
     document.execCommand("copy");
+    $temp.remove();
+    console.log("copied to clipboard! " + $(this).text());
   });
 
 });
