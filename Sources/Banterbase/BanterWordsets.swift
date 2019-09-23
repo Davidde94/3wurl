@@ -10,61 +10,29 @@ import Foundation
 struct BanterWordset {
     
     static let set1: Set<String> = {
-        Set([
-            "a",
-            "an",
-            "multiple",
-            "several",
-            "many",
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-            "six",
-            "seven",
-            "eight",
-            "nine",
-            "ten",
-            "eleven",
-            "twelve",
-            "thirteen",
-            "fourteen",
-            "fifteen",
-            "sixteen",
-            "seventeen",
-            "eighteen",
-            "nineteen",
-            "twenty",
-            "thirty",
-            "fourty",
-            "fifty",
-            "sixty",
-            "seventy",
-            "eighty",
-            "ninety",
-            "your",
-            "my",
-            "his",
-            "her",
-            "their"
-        ])
+        return loadWords(fileName: "Wordset1.json")
     }()
     
     static let set2: Set<String> = {
-        Set([
-            "hurt",
-            "painful",
-            "wonky"
-        ])
+        return loadWords(fileName: "Wordset2.json")
     }()
     
     static let set3: Set<String> = {
-        Set([
-            "banana",
-            "sausage",
-            "donkey"
-        ])
+        return loadWords(fileName: "Wordset3.json")
     }()
+    
+    private static func loadWords(fileName: String) -> Set<String> {
+        do {
+            let fileURL = URL(fileURLWithPath: #file)
+                .deletingLastPathComponent()
+                .appendingPathComponent("Wordsets")
+                .appendingPathComponent(fileName)
+            let data = try Data(contentsOf: fileURL)
+            let array = try JSONDecoder().decode([String].self, from: data)
+            return Set(array)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
     
 }
