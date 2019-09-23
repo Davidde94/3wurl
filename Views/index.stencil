@@ -42,7 +42,7 @@
               <p>
                 Your memorable URL is below - click to copy to clipboard
               </p>
-              <p id="link"></p>
+              <a id="link"></a>
             </div>
           </div>
         </div>
