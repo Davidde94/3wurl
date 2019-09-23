@@ -4,5 +4,8 @@
         <input type="text" name="url" />
         <input type="submit" />
     </form>
+      <a id="linkButton"></a>
+
+    </body>
 
 </html>

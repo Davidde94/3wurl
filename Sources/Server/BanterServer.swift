@@ -5,6 +5,7 @@
 //  Created by David Evans on 22/09/2019.
 //
 
+import Foundation
 import Jupiter
 import Kitura
 import KituraStencil
@@ -31,6 +32,10 @@ extension BanterServer {
         let visitRoute = Route(.get, url: BanterRoutes.visit, function: urlFacade.handleRedirect)
         registerRoute(visitRoute)
         
+        let staticFileServer = StaticFileServer()
+        router.get("/public", allowPartialMatch: true, middleware: staticFileServer)
+        
+//        router.viewsPath = URL(fileURLWithPath: #file).deletingLastPathComponent().appendingPathComponent("../../Views").absoluteString
         router.add(templateEngine: StencilTemplateEngine())
         router.get("/") { (request, response, next) in
             
