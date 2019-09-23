@@ -12,16 +12,21 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
       <script src="public/banter.min.js"></script>
 
+      <link rel="stylesheet" href="public/banter.min.css">
+
     </head>
 
     <body>
 
-      <form id="mainForm" method="POST" action="/create" enctype="application/json">
-          <input type="text" name="url" />
-          <input type="submit" />
-      </form>
+      <div id="wrapper">
 
-      <a id="linkButton"></a>
+        <form id="mainForm" method="POST" action="/create" enctype="application/json">
+            <input id="urlInput" type="text" name="url" />
+        </form>
+
+        <a id="linkButton"></a>
+
+      </div>
 
     </body>
 
