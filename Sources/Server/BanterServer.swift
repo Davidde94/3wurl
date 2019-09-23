@@ -13,6 +13,7 @@ import KituraStencil
 public class BanterServer: Server {
     
     let urlFacade = URLFacade()
+    let rateLimiter = RateLimiter()
     
     override public func setup(configuration: CoreConfiguration) {
         super.setup(configuration: configuration)
@@ -25,6 +26,8 @@ public class BanterServer: Server {
 extension BanterServer {
     
     func setupRoutes() {
+        
+        router.all(middleware: rateLimiter)
         
         let route = Route(.post, url: BanterRoutes.create, function: urlFacade.handleCreateRoute)
         registerRoute(route)
