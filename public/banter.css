@@ -44,6 +44,10 @@ h3 {
   color: rgba(9,9,121,1);
 }
 
+#resultBox {
+  text-align: center;
+}
+
 #link {
   padding: 12px;
   color: rgba(30,30,151,1);
