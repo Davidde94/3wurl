@@ -44,8 +44,19 @@ h3 {
   color: rgba(9,9,121,1);
 }
 
-a, a:visited {
-  color: rgba(30,30,151,1) !important;
+#link {
+  padding: 12px;
+  color: rgba(30,30,151,1);
   text-decoration: none;
-  font-size: 14pt;
+  font-size: 24pt;
+  transition: color 0.2s, background-color 0.2s;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#link:hover {
+  cursor: point;
+  cursor: hand;
+  color: white;
+  background-color: rgba(30,30,151,1)
 }

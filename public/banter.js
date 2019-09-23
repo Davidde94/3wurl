@@ -22,12 +22,17 @@ $(document).ready(function() {
     .done(function(data) {
       var url = data["url"]
       $("#resultBox").show();
-      $("#linkButton").attr("href", url);
-      $("#linkButton").text(url);
+      $("#link").text(url);
     })
     .fail(function(data) {
       console.log(data);
     })
+  });
+
+  $("#link").click(function(event) {
+    $(this).focus();
+    $(this).select();
+    document.execCommand("copy");
   });
 
 });
