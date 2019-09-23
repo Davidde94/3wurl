@@ -40,9 +40,9 @@
           <div class="col-auto">
             <div id="resultBox" style='display: none'>
               <p>
-                Your memorabale URL is:
+                Your memorable URL is below - click to copy to clipboard
               </p>
-              <a id="linkButton"></a>
+              <p id="link"></p>
             </div>
           </div>
         </div>
