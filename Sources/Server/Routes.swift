@@ -12,6 +12,6 @@ struct BanterRoutes {
     private init() { }
     
     static let create       = "/create"
-    static let visit        = "/r/:identifier"
+    static let visit        = "/[a-zA-Z]+-[a-zA-Z]+-[a-zA-Z]+"
     
 }

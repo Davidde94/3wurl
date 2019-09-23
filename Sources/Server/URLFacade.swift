@@ -37,7 +37,6 @@ class URLFacade: Facade {
                 if let port = request.parsedURL.port {
                     responseUrlString += ":\(port)"
                 }
-                responseUrlString += "/r"
                 let responseURL = URL(string: responseUrlString)!
                     .appendingPathComponent(identifier, isDirectory: false)
                 let response = CreateURLResponse(url: responseURL)
@@ -51,7 +50,11 @@ class URLFacade: Facade {
     
     func handleRedirect(request: RouterRequest, onComplete: @escaping FacadeRouteCallback<CreateURLResponse>) throws {
      
-        let identifier = request.parameters["identifier"]!
+        let path = request.parsedURL.path!.dropFirst().split(separator: "-")
+        let w1 = path[0]
+        let w2 = path[1]
+        let w3 = path[2]
+        let identifier = "\(w1)-\(w2)-\(w3)"
         
         identifierProvider.validateIdentifier(identifier) { result in
             
