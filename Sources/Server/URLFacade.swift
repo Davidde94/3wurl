@@ -32,8 +32,8 @@ class URLFacade: Facade {
             case .failure(let error):
                 onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
             case .success(let identifier):
-                let responseURL = URL(string: "https://banterurl.blackpoint.co/r")!
-                    .appendingPathComponent(identifier, isDirectory: true)
+                let responseURL = URL(string: "\(request.parsedURL.schema!)://\(request.parsedURL.host!):\(request.parsedURL.port!)/r")!
+                    .appendingPathComponent(identifier, isDirectory: false)
                 let response = CreateURLResponse(url: responseURL)
                 onComplete(.success(FacadeSuccess(statusCode: .OK, response: response)))
             }
