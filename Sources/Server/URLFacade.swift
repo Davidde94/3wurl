@@ -49,7 +49,7 @@ class URLFacade: Facade {
         
     }
     
-    func handleRedirect(request: RouterRequest, onComplete: @escaping FacadeRouteCallback<String>) throws {
+    func handleRedirect(request: RouterRequest, onComplete: @escaping FacadeRouteCallback<CreateURLResponse>) throws {
      
         let identifier = request.parameters["identifier"]!
         
@@ -57,7 +57,8 @@ class URLFacade: Facade {
             
             switch result {
             case .success(let url):
-                onComplete(.success(FacadeSuccess(statusCode: .movedPermanently, response: "Moved!", headers: ["Location" : url])))
+                let response = CreateURLResponse(url: URL(string: url))
+                onComplete(.success(FacadeSuccess(statusCode: .movedPermanently, response: response, headers: ["Location" : url])))
             case .failure(let error):
                 onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
             }
