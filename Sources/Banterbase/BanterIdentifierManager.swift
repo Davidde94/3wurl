@@ -105,4 +105,30 @@ public class BanterIdentifierManager {
         
     }
     
+    public func registerVisit(_ identifier: String) {
+        
+        Database.getConnection { result in
+            
+            switch result {
+            case .failure(_):
+                break
+            case .success(let connection):
+                self.registerVisit(identifier, using: connection)
+            }
+            
+        }
+        
+    }
+    
+    func registerVisit(_ identifier: String, using connection: Connection) {
+        
+        let table = IdentifierTable()
+        let query = "UPDATE \(table.tableName) SET \(table.visits.name)=\(table.visits.name)+1 WHERE \(table.identifier.name)=\"\(identifier)\""
+        
+        connection.execute(query) { result in
+            return
+        }
+        
+    }
+    
 }
