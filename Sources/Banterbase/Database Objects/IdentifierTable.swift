@@ -15,5 +15,6 @@ class IdentifierTable: Table {
     let id = Column("id")
     let identifier = Column("identifier")
     let target = Column("target")
+    let visits = Column("visits")
     
 }

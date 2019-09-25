@@ -62,6 +62,7 @@ class URLFacade: Facade {
             case .success(let url):
                 let response = CreateURLResponse(url: URL(string: url)!)
                 onComplete(.success(FacadeSuccess(statusCode: .movedPermanently, response: response, headers: ["Location" : url])))
+                self.identifierProvider.registerVisit(identifier)
             case .failure(let error):
                 onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
             }
