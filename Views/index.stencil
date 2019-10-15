@@ -2,10 +2,10 @@
 
     <head>
 
-      <title>Banter URL</title>
+      <title>3WURL | 3 Word URLs</title>
       <meta charset="UTF-8">
       <meta name="description" content="Something simple to make long URLs memorable">
-      <meta name="keywords" content="banter, url, tiny, bit, blackpoint">
+      <meta name="keywords" content="banter, 3, wurl, 3wurl, url, tiny, bit, blackpoint">
       <meta name="author" content="David Evans | BlackPoint Limited">
 
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
