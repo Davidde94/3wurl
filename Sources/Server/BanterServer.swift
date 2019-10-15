@@ -9,8 +9,11 @@ import Foundation
 import Jupiter
 import Kitura
 import KituraStencil
+import Banterbase
 
 public class BanterServer: Server {
+    
+    let identifierProvider = BanterIdentifierManager()
     
     let urlFacade = URLFacade()
     let rateLimiter = RateLimiter()
@@ -42,13 +45,27 @@ extension BanterServer {
         router.add(templateEngine: StencilTemplateEngine())
         router.get("/") { (request, response, next) in
             
-            do {
-                try response.render("index.stencil", context: [:])
-            } catch {
-                print(error)
+            self.identifierProvider.loadTopIdentifiers { result in
+                
+                let topIdentifiers: [BanterIdentifierManager.TopIdentifier]
+                switch result {
+                case .failure(_):
+                    topIdentifiers = []
+                case .success(let results):
+                    topIdentifiers = results
+                }
+             
+                do {
+                    try response.render("index.stencil", context: [
+                        "topIdentifiers" : topIdentifiers
+                    ])
+                } catch {
+                    print(error)
+                }
+                
+                next()
+                
             }
-            
-            next()
             
         }
     }

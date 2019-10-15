@@ -46,6 +46,28 @@
             </div>
           </div>
         </div>
+
+      </div>
+
+      <div id="wrapper" class="container mt-5 pt-5">
+
+        <div class="row justify-content-center mb-3">
+          <div class="col-auto">
+            <h2>Some popular 3wurls</h2>
+          </div>
+        </div>
+
+        {% for identifier in topIdentifiers %}
+        <div class="row justify-content-center">
+          <div class="col">
+            <a href="{{identifier.identifier}}" class="float-right">{{identifier.identifier}}</a>
+          </div>
+          <div class="col">
+            <p class="float-left">{{identifier.viewCount}}</p>
+          </div>
+        </div>
+        {% endfor %}
+
       </div>
 
     </body>
