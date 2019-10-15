@@ -122,10 +122,12 @@ public class BanterIdentifierManager {
     
     func registerVisit(_ identifier: String, using connection: Connection) {
         
-        let table = IdentifierTable()
-        let query = "UPDATE \(table.tableName) SET \(table.visits.name)=\(table.visits.name)+1 WHERE \(table.identifier.name)=\"\(identifier)\""
+        let idTable = IdentifierTable()
+        let visitTable = VisitTable()
+        let select = Select(idTable.id.as("identifier"), now().as("date"), from: idTable).where(idTable.identifier == identifier)
+        let insert = Insert(into: visitTable, columns: [visitTable.identifier, visitTable.date], select, returnID: false)
         
-        connection.execute(query) { result in
+        connection.execute(query: insert) { result in
             return
         }
         
