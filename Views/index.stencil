@@ -47,6 +47,11 @@
           </div>
         </div>
       </div>
+      
+      {% for identifier in topIdentifiers %}
+          <p>{{identifier.identifier}}</p>
+          <p>{{identifier.viewCount}}</p>
+      {% endfor %}
 
     </body>
 

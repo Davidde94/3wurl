@@ -134,3 +134,69 @@ public class BanterIdentifierManager {
     }
     
 }
+
+// MARK: - Top identifiers
+public extension BanterIdentifierManager {
+    
+    struct TopIdentifier {
+        let identifier: String
+        let viewCount: Int64
+    }
+    
+    func loadTopIdentifiers(limit: Int = 10, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
+        
+        Database.getConnection { result in
+            
+            switch result {
+            case .failure(let error):
+                onComplete(.failure(error))
+            case .success(let connection):
+                self.loadTopIdentifiers(limit: limit, using: connection, onComplete: onComplete)
+            }
+            
+        }
+        
+    }
+    
+    private func loadTopIdentifiers(limit: Int, using connection: Connection, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
+        
+        let identifierTable = IdentifierTable()
+        let visitsTable = VisitTable()
+        
+        let query = Select(count(visitsTable.identifier).as("count"), identifierTable.identifier, from: visitsTable)
+            .join(identifierTable)
+            .on(visitsTable.identifier == identifierTable.id)
+            .group(by: visitsTable.identifier)
+            .order(by: [.DESC(count(visitsTable.identifier))])
+            .limit(to: limit)
+        
+        connection.execute(query: query) { result in
+            
+            switch result {
+            case .error(let error):
+                onComplete(.failure(error))
+            case .resultSet(_):
+                result.asRows { rows, error in
+                    guard let rows = rows else {
+                        return
+                    }
+                    let identifiers: [TopIdentifier] = rows.compactMap { row in
+                        guard
+                            let identifier = row["identifier"] as? String,
+                            let viewCount = row["count"] as? Int64
+                        else {
+                            return nil
+                        }
+                        return TopIdentifier(identifier: identifier, viewCount: viewCount)
+                    }
+                    onComplete(.success(identifiers))
+                }
+            default:
+                break
+            }
+            
+        }
+        
+    }
+    
+}
