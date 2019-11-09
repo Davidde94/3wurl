@@ -4,9 +4,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "BanterURL",
+    name: "3wurl",
     products: [
-        .executable(name: "BanterURL", targets: ["BanterURL"])
+        .executable(name: "3wurl", targets: ["3wurl"])
     ],
     dependencies: [
         .package(url: "https://github.com/Davidde94/Jupiter", .branch("master")),
@@ -23,10 +23,7 @@ let package = Package(
             name: "Server",
             dependencies: ["Jupiter", "KituraStencil", "Banterbase"]),
         .target(
-            name: "BanterURL",
-            dependencies: ["Server", "Jupiter"]),
-        .testTarget(
-            name: "BanterURLTests",
-            dependencies: ["BanterURL"]),
+            name: "3wurl",
+            dependencies: ["Server", "Jupiter"])
     ]
 )
