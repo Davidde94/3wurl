@@ -25,4 +25,4 @@ jobs:
                 exit 0
               fi
 
-              ssh -i ~/.ssh/id_rsa_0a12a4a4896febf713014d85f052accb -o StrictHostKeyChecking=no -p 14815 app-banterurl@main.blackpoint.co "cd BanterURL && git fetch --all && git reset --hard origin/master && /usr/local/bin/swift/usr/bin/swift package update && /usr/local/bin/swift/usr/bin/swift build -c release && sudo service banterurl restart"
+              ssh -i ~/.ssh/id_rsa_0a12a4a4896febf713014d85f052accb -o StrictHostKeyChecking=no -p 14815 app-banterurl@main.blackpoint.co "cd 3wurl && bash deploy.sh"
