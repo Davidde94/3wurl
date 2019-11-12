@@ -9,7 +9,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "0a:12:a4:a4:89:6f:eb:f7:13:01:4d:85:f0:52:ac:cb"
+            - "5c:08:2f:6f:7c:65:91:8e:d7:6f:03:4b:b3:02:2f:7f"
       - run:
           name: Setup
           command: |
@@ -25,4 +25,4 @@ jobs:
                 exit 0
               fi
 
-              ssh -i ~/.ssh/id_rsa_0a12a4a4896febf713014d85f052accb -o StrictHostKeyChecking=no -p 14815 app-banterurl@main.blackpoint.co "cd 3wurl && bash deploy.sh"
+              ssh -o StrictHostKeyChecking=no -p 14815 app-banterurl@main.blackpoint.co "cd 3wurl && bash deploy.sh"
