@@ -25,4 +25,4 @@ jobs:
                 exit 0
               fi
 
-              ssh -i ~/.ssh/id_rsa_5c082f6f7c65918ed76f034bb3022f7f -o StrictHostKeyChecking=no -p 14815 u_blackpoint@main.blackpoint.co "cd ~/3wurl && ls -al && bash deploy.sh"
+              ssh -i ~/.ssh/id_rsa_5c082f6f7c65918ed76f034bb3022f7f -o StrictHostKeyChecking=no -p 14815 u_blackpoint@main.blackpoint.co "cd ~/3wurl && git fetch --all && git reset --hard origin/master && bash deploy.sh"
