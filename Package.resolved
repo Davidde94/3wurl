@@ -20,26 +20,8 @@
         }
       },
       {
-        "package": "HeliumLogger",
-        "repositoryURL": "https://github.com/IBM-Swift/HeliumLogger.git",
-        "state": {
-          "branch": null,
-          "revision": "146a36c2a91270e4213fa7d7e8192cd2e55d0ace",
-          "version": "1.9.0"
-        }
-      },
-      {
-        "package": "Jupiter",
-        "repositoryURL": "https://github.com/Davidde94/Jupiter",
-        "state": {
-          "branch": "master",
-          "revision": "22fc9a5aa2f35d36a7dcb50e29ee597d563c7ac2",
-          "version": null
-        }
-      },
-      {
         "package": "Kitura",
-        "repositoryURL": "https://github.com/IBM-Swift/Kitura.git",
+        "repositoryURL": "https://github.com/IBM-Swift/Kitura",
         "state": {
           "branch": null,
           "revision": "bbb7462ac3d422cad4480a57ddbd33263c381a7b",

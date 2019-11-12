@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Jupiter
 import Kitura
 import KituraStencil
 import Banterbase
