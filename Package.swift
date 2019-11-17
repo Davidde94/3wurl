@@ -8,7 +8,7 @@ let products: [Product] = [
 ]
 
 let dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/Davidde94/Jupiter", .branch("master")),
+    .package(url: "https://github.com/IBM-Swift/Kitura", .upToNextMinor(from: "2.9.0")),
     .package(url: "https://github.com/IBM-Swift/SwiftKueryMySQL", .upToNextMinor(from: "2.0.0")),
     .package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", .upToNextMinor(from: "1.11.0"))
 ]
@@ -19,10 +19,10 @@ let targets: [Target] = [
         dependencies: ["SwiftKueryMySQL"]),
     .target(
         name: "Server",
-        dependencies: ["Jupiter", "KituraStencil", "Banterbase"]),
+        dependencies: ["Kitura", "KituraStencil", "Banterbase"]),
     .target(
         name: "3wurl",
-        dependencies: ["Server", "Jupiter"])
+        dependencies: ["Server"])
 ]
 
 let package = Package(

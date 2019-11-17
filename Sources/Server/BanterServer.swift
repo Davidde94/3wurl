@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Jupiter
 import Kitura
 import KituraStencil
 import Banterbase
@@ -17,6 +16,10 @@ public class BanterServer: Server {
     
     let urlFacade = URLFacade()
     let rateLimiter = RateLimiter()
+    
+    public override init() {
+        super.init()
+    }
     
     override public func setup(configuration: CoreConfiguration) {
         super.setup(configuration: configuration)
