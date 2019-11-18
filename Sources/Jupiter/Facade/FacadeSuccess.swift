@@ -8,12 +8,12 @@
 import Foundation
 import Kitura
 
-struct FacadeSuccess<T> {
+public struct FacadeSuccess<T> {
     let statusCode: HTTPStatusCode
     let response: T
     let headers: [String: String]
     
-    init(statusCode: HTTPStatusCode, response: T, headers: [String: String] = [:]) {
+    public init(statusCode: HTTPStatusCode, response: T, headers: [String: String] = [:]) {
         self.statusCode = statusCode
         self.response = response
         self.headers = headers

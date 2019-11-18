@@ -8,11 +8,15 @@
 import Foundation
 import Kitura
 
-class RateLimiter: RouterMiddleware {
+public class RateLimiter: RouterMiddleware {
     
     let semaphore = DispatchSemaphore(value: 25)
     
-    func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
+    public init() {
+        
+    }
+    
+    public func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
         
         _ = semaphore.wait(timeout: .now() + .seconds(2))
         next()

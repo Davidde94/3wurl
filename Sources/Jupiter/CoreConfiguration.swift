@@ -8,8 +8,8 @@
 import LoggerAPI
 
 public struct CoreConfiguration {
-    let logLevel: LoggerMessageType
-    let listenerPorts: ListenerPorts
+    public let logLevel: LoggerMessageType
+    public let listenerPorts: ListenerPorts
 
     public init(logLevel: LoggerMessageType, listenerPorts: ListenerPorts) {
         self.logLevel = logLevel

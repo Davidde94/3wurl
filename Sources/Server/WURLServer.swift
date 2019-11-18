@@ -8,30 +8,17 @@
 import Foundation
 import Kitura
 import KituraStencil
-import Banterbase
+import WurlStore
+import Jupiter
 
-public class BanterServer: Server {
+public class WURLServer: Server {
     
     let identifierProvider = BanterIdentifierManager()
     
     let urlFacade = URLFacade()
     let rateLimiter = RateLimiter()
     
-    public override init() {
-        super.init()
-    }
-    
-    override public func setup(configuration: CoreConfiguration) {
-        super.setup(configuration: configuration)
-        setupRoutes()
-    }
-    
-}
-
-// MARK: - Routes
-extension BanterServer {
-    
-    func setupRoutes() {
+    override public func setupRoutes() {
         
         router.all(middleware: rateLimiter)
         
@@ -44,7 +31,7 @@ extension BanterServer {
         let staticFileServer = StaticFileServer()
         router.get("/public", allowPartialMatch: true, middleware: staticFileServer)
         
-//        router.viewsPath = URL(fileURLWithPath: #file).deletingLastPathComponent().appendingPathComponent("../../Views").absoluteString
+        //        router.viewsPath = URL(fileURLWithPath: #file).deletingLastPathComponent().appendingPathComponent("../../Views").absoluteString
         router.add(templateEngine: StencilTemplateEngine())
         router.get("/") { (request, response, next) in
             
@@ -57,7 +44,7 @@ extension BanterServer {
                 case .success(let results):
                     topIdentifiers = results
                 }
-             
+                
                 do {
                     try response.render("index.stencil", context: [
                         "topIdentifiers" : topIdentifiers
