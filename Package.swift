@@ -5,6 +5,7 @@ import PackageDescription
 
 let products: [Product] = [
     .executable(name: "3wurl", targets: ["3wurl"]),
+    .executable(name: "3wurlRedirect", targets: ["3wurlRedirect"]),
     .library(name: "Jupiter", targets: ["Jupiter"])
 ]
 
@@ -25,12 +26,12 @@ let targets: [Target] = [
         dependencies: ["Kitura", "HeliumLogger"]
     ),
     .target(
-        name: "Server",
-        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"])
-    ,
-    .target(
         name: "3wurl",
-        dependencies: ["Server"]
+        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"]
+    ),
+    .target(
+        name: "3wurlRedirect",
+        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"]
     )
 ]
 
