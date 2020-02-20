@@ -33,8 +33,9 @@ class URLFacade: Facade {
                 onComplete(.failure(FacadeError(statusCode: .internalServerError, message: error.localizedDescription)))
             case .success(let identifier):
                 
-                var responseUrlString = "https://3wurl.xyz"
-                if let port = request.parsedURL.port {
+                let host = Host.current
+                var responseUrlString = "\(host.host)"
+                if let port = host.port {
                     responseUrlString += ":\(port)"
                 }
                 let responseURL = URL(string: responseUrlString)!
