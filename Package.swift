@@ -19,7 +19,7 @@ let dependencies: [Package.Dependency] = [
 let targets: [Target] = [
     .target(
         name: "WurlStore",
-        dependencies: ["SwiftKueryMySQL"]
+        dependencies: ["SwiftKueryMySQL", "Wordset"]
     ),
     .target(
         name: "Jupiter",
@@ -27,12 +27,20 @@ let targets: [Target] = [
     ),
     .target(
         name: "3wurl",
-        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"]
+        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter", "Wordset"]
     ),
     .target(
         name: "3wurlRedirect",
         dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"]
-    )
+    ),
+    .target(
+        name: "Wordset",
+        dependencies: []
+    ),
+    .testTarget(
+        name: "WordsetTests",
+        dependencies: ["Wordset"]
+    ),
 ]
 
 let package = Package(

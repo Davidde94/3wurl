@@ -8,6 +8,7 @@
 import Foundation
 import SwiftKuery
 import SwiftKueryMySQL
+import Wordset
 
 public class BanterIdentifierManager {
     
@@ -32,7 +33,7 @@ public class BanterIdentifierManager {
     
     func createIdentifier(for url: URL, using connection: Connection, onComplete: @escaping (Result<String, Error>) -> Void) {
         
-        let identifier = BanterIdentifierProvider.new()
+        let identifier = WurlGenerator.new
         let table = IdentifierTable()
         let query = Insert(
             into: table,
