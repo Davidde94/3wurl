@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BanterWordset {
+enum Wordsets {
     
     static let set1: Set<String> = {
         return loadWords(fileName: "Wordset1.json")
@@ -23,6 +23,7 @@ struct BanterWordset {
     
     private static func loadWords(fileName: String) -> Set<String> {
         do {
+            print(#file)
             let fileURL = URL(fileURLWithPath: #file)
                 .deletingLastPathComponent()
                 .appendingPathComponent("Wordsets")
