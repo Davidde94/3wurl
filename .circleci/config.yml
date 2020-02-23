@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: davidde94/inertia:1.0.1
+      - image: davidde94/3wurl:1.0.0
     working_directory: ~/3wurl
     shell: /bin/bash --login -eo pipefail
     steps:
