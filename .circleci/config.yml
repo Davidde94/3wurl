@@ -17,6 +17,9 @@ jobs:
               echo 'export PATH="$PATH:/usr/local/bin/swift/usr/bin"' >> $BASH_ENV
               source $BASH_ENV
       - run:
+          name: Test
+          command: swift test
+      - run:
           name: Deploy if needed
           command: |
               ls ~/.ssh
