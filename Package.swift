@@ -4,38 +4,22 @@
 import PackageDescription
 
 let products: [Product] = [
-    .executable(name: "3wurl", targets: ["3wurl"]),
-    .executable(name: "3wurlRedirect", targets: ["3wurlRedirect"]),
-    .library(name: "Jupiter", targets: ["Jupiter"])
+    
 ]
 
 let dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/IBM-Swift/Kitura", .upToNextMinor(from: "2.9.0")),
-    .package(url: "https://github.com/IBM-Swift/SwiftKueryMySQL", .upToNextMinor(from: "2.0.0")),
-    .package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", .upToNextMinor(from: "1.11.0")),
-    .package(url: "https://github.com/IBM-Swift/HeliumLogger", .upToNextMinor(from: "1.9.0"))
+    .package(url: "https://github.com/vapor/vapor", from: "4.0.0-beta"),
+    .package(url: "https://github.com/vapor/mysql-kit", from: "4.0.0-beta")
 ]
 
 let targets: [Target] = [
     .target(
         name: "WurlStore",
-        dependencies: ["SwiftKueryMySQL", "Wordset"]
-    ),
-    .target(
-        name: "Jupiter",
-        dependencies: ["Kitura", "HeliumLogger"]
-    ),
-    .target(
-        name: "3wurl",
-        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter", "Wordset"]
-    ),
-    .target(
-        name: "3wurlRedirect",
-        dependencies: ["Kitura", "KituraStencil", "WurlStore", "Jupiter"]
+        dependencies: ["Vapor", "MySQLKit"]
     ),
     .target(
         name: "Wordset",
-        dependencies: []
+        dependencies: ["Vapor"]
     ),
     .testTarget(
         name: "WordsetTests",
@@ -45,6 +29,9 @@ let targets: [Target] = [
 
 let package = Package(
     name: "3wurl",
+    platforms: [
+        .macOS(.v10_15),
+    ],
     products: products,
     dependencies: dependencies,
     targets: targets
