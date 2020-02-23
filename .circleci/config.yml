@@ -18,7 +18,7 @@ jobs:
               source $BASH_ENV
       - run:
           name: Test
-          command: swift test
+          command: swift test --enable-test-discovery
       - run:
           name: Deploy if needed
           command: |
