@@ -56,28 +56,21 @@ public class BanterIdentifierManager {
     
     func validateIdentifier(_ identifier: String, using connection: MySQLConnection, onComplete: @escaping (Result<String, Error>) -> Void) {
         
-        let table = IdentifierTable()
-        let query = Select(table.target, from: table).where(table.identifier == identifier).limit(to: 1)
-        
-        connection.execute(query: query) { result in
-            
+        let query = "SELECT `target` FROM `identifier` WHERE `identifier`=? LIMIT 1"
+        connection.query(query, [.init(string: identifier)]).whenComplete { (result) in
             switch result {
-            
-            case .error(let error):
+            case .failure(let error):
                 onComplete(.failure(error))
-            case .resultSet(let set):
-                set.nextRow { row, error in
-                    guard let target = row?.first as? String else {
-                        return
-                    }
-                    onComplete(.success(target))
+            case .success(let rows):
+                guard let row = rows.first else {
+                    return
                 }
-            case .success(_):
-                break
-            case .successNoData:
-                break
+                do {
+                    onComplete(.success(try row.decode(column: "target", as: String.self)))
+                } catch {
+                    onComplete(.failure(error))
+                }
             }
-            
         }
         
     }
@@ -94,18 +87,10 @@ public class BanterIdentifierManager {
     }
     
     func registerVisit(_ identifier: String, using connection: MySQLConnection) {
-        
-        
-        
-//        let idTable = IdentifierTable()
-//        let visitTable = VisitTable()
-//        let select = Select(idTable.id.as("identifier"), now().as("date"), from: idTable).where(idTable.identifier == identifier)
-//        let insert = Insert(into: visitTable, columns: [visitTable.identifier, visitTable.date], select, returnID: false)
-//
-//        connection.execute(query: insert) { result in
-//            return
-//        }
-        
+        let query = "INSERT INTO `visit` (`identifier`, `date`) SELECT `id` AS identifier now() as date FROM `identifier` WHERE `identifier`.`identifier`=?"
+        connection.query(query, [.init(string: identifier)]).whenSuccess { _ in
+            return
+        }
     }
     
 }
