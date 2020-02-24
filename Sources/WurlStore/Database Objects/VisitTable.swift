@@ -1,20 +1,19 @@
+////
+////  File.swift
+////  
+////
+////  Created by David Evans on 15/10/2019.
+////
 //
-//  File.swift
-//  
+//import Foundation
+//import MySQLKit
 //
-//  Created by David Evans on 15/10/2019.
-//
-
-import Foundation
-
-import SwiftKuery
-
-class VisitTable: Table {
-    
-    let tableName = "visit"
-    
-    let id = Column("id")
-    let identifier = Column("identifier")
-    let date = Column("date")
-    
-}
+//class VisitTable: Table {
+//    
+//    let tableName = "visit"
+//    
+//    let id = Column("id")
+//    let identifier = Column("identifier")
+//    let date = Column("date")
+//    
+//}

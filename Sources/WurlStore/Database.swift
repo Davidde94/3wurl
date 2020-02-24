@@ -6,14 +6,11 @@
 //
 
 import Foundation
-import SwiftKuery
-import SwiftKueryMySQL
+import MySQLKit
 
 public class Database {
     
-    static let connectionOptions = ConnectionPoolOptions(initialCapacity: 1, maxCapacity: 10)
-    
-    static let configuration: Configuration = {
+    private static let rawConfiguration: Configuration = {
         do {
             let file = #file
             let url = URL(fileURLWithPath: file)
@@ -29,24 +26,20 @@ public class Database {
         }
     }()
     
-    static var connectionPool = MySQLConnection.createPool(
-        host: configuration.host,
-        user: configuration.user,
-        password: configuration.password,
-        database: configuration.database,
-        poolOptions: connectionOptions
+    private static let configuration = MySQLConfiguration(
+        hostname: rawConfiguration.host,
+        port: rawConfiguration.port,
+        username: rawConfiguration.user,
+        password: rawConfiguration.password,
+        database: rawConfiguration.database
     )
     
-    public static func getConnection(onConnection: @escaping (Result<Connection, QueryError>) -> Void) {
-        connectionPool.getConnection { connection, error in
-            if let error = error {
-                onConnection(.failure(error))
-            } else if let connection = connection {
-                onConnection(.success(connection))
-            } else {
-                fatalError()
-            }
-        }
+    private static let connectionPool = MySQLConnectionSource(configuration: configuration)
+    private static let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+    private static let logger = Logger(label: "xyz.3wurl.WurlStore")
+    
+    public static func getConnection() -> EventLoopFuture<MySQLConnection> {
+        return connectionPool.makeConnection(logger: logger, on: eventLoopGroup.next())
     }
     
 }
