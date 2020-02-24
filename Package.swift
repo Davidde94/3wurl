@@ -15,7 +15,7 @@ let dependencies: [Package.Dependency] = [
 let targets: [Target] = [
     .target(
         name: "WurlStore",
-        dependencies: ["Vapor", "MySQLKit"]
+        dependencies: ["Vapor", "MySQLKit", "Wordset"]
     ),
     .target(
         name: "Wordset",
