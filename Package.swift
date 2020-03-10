@@ -8,14 +8,14 @@ let products: [Product] = [
 ]
 
 let dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/vapor/vapor", from: "4.0.0-beta"),
-    .package(url: "https://github.com/vapor/mysql-kit", from: "4.0.0-beta")
+    .package(url: "https://github.com/vapor/vapor", .exact("4.0.0-rc.3.1")),
+    .package(url: "https://github.com/vapor/fluent-mysql-driver", .exact("4.0.0-rc.1.1"))
 ]
 
 let targets: [Target] = [
     .target(
         name: "WurlStore",
-        dependencies: ["Vapor", "MySQLKit", "Wordset"]
+        dependencies: ["Vapor", "Wordset"]
     ),
     .target(
         name: "Wordset",

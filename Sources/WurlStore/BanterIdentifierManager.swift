@@ -12,12 +12,14 @@ import MySQLNIO
 
 public class BanterIdentifierManager {
     
-    public init() {
-        
+    let database: Database
+    
+    public init(database: Database) {
+        self.database = database
     }
     
     public func createIdentifier(for url: URL, onComplete: @escaping (Result<String, Error>) -> Void) throws {
-        Database.getConnection().whenComplete { (result) in
+        self.database.getConnection().whenComplete { (result) in
             switch result {
             case .failure(let error):
                 onComplete(.failure(error))
@@ -44,7 +46,7 @@ public class BanterIdentifierManager {
     }
     
     public func validateIdentifier(_ identifier: String, onComplete: @escaping (Result<String, Error>) -> Void) {
-        Database.getConnection().whenComplete { result in
+        self.database.getConnection().whenComplete { result in
             switch result {
             case .failure(let error):
                 onComplete(.failure(error))
@@ -76,7 +78,7 @@ public class BanterIdentifierManager {
     }
     
     public func registerVisit(_ identifier: String) {
-        Database.getConnection().whenComplete { result in
+        self.database.getConnection().whenComplete { result in
             switch result {
             case .failure(_):
                 break
