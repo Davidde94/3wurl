@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,11 +15,12 @@ let dependencies: [Package.Dependency] = [
 let targets: [Target] = [
     .target(
         name: "WurlStore",
-        dependencies: ["Vapor", "Wordset"]
+        dependencies: [
+            .product(name: "Vapor", package: "vapor"), .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),"Wordset"]
     ),
     .target(
         name: "Wordset",
-        dependencies: ["Vapor"]
+        dependencies: [.product(name: "Vapor", package: "vapor")]
     ),
     .testTarget(
         name: "WordsetTests",
