@@ -106,7 +106,7 @@ public extension BanterIdentifierManager {
     }
     
     func loadTopIdentifiers(limit: Int = 10, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
-        Database.getConnection().whenComplete { result in
+        self.database.getConnection().whenComplete { result in
             switch result {
             case .failure(let error):
                 onComplete(.failure(error))
