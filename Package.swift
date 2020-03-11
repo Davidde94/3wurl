@@ -4,7 +4,7 @@
 import PackageDescription
 
 let products: [Product] = [
-    
+    .executable(name: "WurlServe", targets: ["WurlServe"])
 ]
 
 let dependencies: [Package.Dependency] = [
@@ -13,6 +13,11 @@ let dependencies: [Package.Dependency] = [
 ]
 
 let targets: [Target] = [
+    .target(name: "WurlServe", dependencies: [
+        .product(name: "Vapor", package: "vapor"),
+        "WurlStore",
+        "Wordset"
+    ]),
     .target(
         name: "WurlStore",
         dependencies: [
