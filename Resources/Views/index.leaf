@@ -10,11 +10,11 @@
 
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-      <script src="public/banter.min.js"></script>
+      <script src="banter.min.js"></script>
 
       <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-      <link rel="stylesheet" href="public/banter.min.css">
+      <link rel="stylesheet" href="banter.min.css">
 
     </head>
 
@@ -49,6 +49,7 @@
 
       </div>
 
+    <!--
       <div id="wrapper" class="container mt-5 pt-5">
 
         <div class="row justify-content-center mb-3">
@@ -69,6 +70,7 @@
         {% endfor %}
 
       </div>
+      -->
 
     </body>
 

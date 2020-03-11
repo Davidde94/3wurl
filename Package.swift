@@ -9,12 +9,14 @@ let products: [Product] = [
 
 let dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/vapor/vapor", .exact("4.0.0-rc.3.1")),
-    .package(url: "https://github.com/vapor/fluent-mysql-driver", .exact("4.0.0-rc.1.1"))
+    .package(url: "https://github.com/vapor/fluent-mysql-driver", .exact("4.0.0-rc.1.1")),
+    .package(url: "https://github.com/vapor/leaf.git", .exact("4.0.0-rc.1.1")),
 ]
 
 let targets: [Target] = [
     .target(name: "WurlServe", dependencies: [
         .product(name: "Vapor", package: "vapor"),
+        .product(name: "Leaf", package: "leaf"),
         "WurlStore",
         "Wordset"
     ]),
