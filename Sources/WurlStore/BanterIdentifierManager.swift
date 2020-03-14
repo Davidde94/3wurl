@@ -9,113 +9,89 @@ import Foundation
 import Wordset
 import MySQLKit
 import MySQLNIO
+import FluentKit
 
-public class BanterIdentifierManager {
+public enum BanterIdentifierManager {
     
-    public init() {
-        
-    }
-    
-    public func createIdentifier(for url: URL, onComplete: @escaping (Result<String, Error>) -> Void) throws {
-        Database.getConnection().whenComplete { (result) in
-            switch result {
-            case .failure(let error):
-                onComplete(.failure(error))
-            case .success(let connection):
-                self.createIdentifier(for: url, using: connection, onComplete: onComplete)
-            }
-        }
-    }
-    
-    func createIdentifier(for url: URL, using connection: MySQLConnection, onComplete: @escaping (Result<String, Error>) -> Void) {
+    public static func createIdentifier(for url: URL, on database: Database) -> EventLoopFuture<Wurl> {
         let identifier = WurlGenerator.new
-        connection.query("INSERT INTO identifier (identifier, target) VALUES (?, ?)", [
-            .init(string: identifier),
-            .init(string: url.absoluteString)
-        ]).whenComplete { result in
-            switch result {
-            case .failure(let error):
-                onComplete(.failure(error))
-            case .success(_):
-                onComplete(.success(identifier))
-            }
-        }
-        
+        let wurl = Wurl(identifier: identifier, target: url, dateCreated: Date())
+        return wurl.save(on: database).map { wurl }
     }
     
-    public func validateIdentifier(_ identifier: String, onComplete: @escaping (Result<String, Error>) -> Void) {
-        Database.getConnection().whenComplete { result in
-            switch result {
-            case .failure(let error):
-                onComplete(.failure(error))
-            case .success(let connection):
-                self.validateIdentifier(identifier, using: connection, onComplete: onComplete)
-            }
-        }
-    }
-    
-    func validateIdentifier(_ identifier: String, using connection: MySQLConnection, onComplete: @escaping (Result<String, Error>) -> Void) {
-        
-        let query = "SELECT `target` FROM `identifier` WHERE `identifier`=? LIMIT 1"
-        connection.query(query, [.init(string: identifier)]).whenComplete { (result) in
-            switch result {
-            case .failure(let error):
-                onComplete(.failure(error))
-            case .success(let rows):
-                guard let row = rows.first else {
-                    return
-                }
-                do {
-                    onComplete(.success(try row.decode(column: "target", as: String.self)))
-                } catch {
-                    onComplete(.failure(error))
-                }
-            }
-        }
-        
-    }
-    
-    public func registerVisit(_ identifier: String) {
-        Database.getConnection().whenComplete { result in
-            switch result {
-            case .failure(_):
-                break
-            case .success(let connection):
-                self.registerVisit(identifier, using: connection)
-            }
-        }
-    }
-    
-    func registerVisit(_ identifier: String, using connection: MySQLConnection) {
-        let query = "INSERT INTO `visit` (`identifier`, `date`) SELECT `id` AS identifier now() as date FROM `identifier` WHERE `identifier`.`identifier`=?"
-        connection.query(query, [.init(string: identifier)]).whenSuccess { _ in
-            return
-        }
-    }
-    
-}
-
-// MARK: - Top identifiers
-public extension BanterIdentifierManager {
-    
-    struct TopIdentifier {
-        let identifier: String
-        let viewCount: Int64
-    }
-    
-    func loadTopIdentifiers(limit: Int = 10, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
-        Database.getConnection().whenComplete { result in
-            switch result {
-            case .failure(let error):
-                onComplete(.failure(error))
-            case .success(let connection):
-                self.loadTopIdentifiers(limit: limit, using: connection, onComplete: onComplete)
-            }
-        }
-    }
-    
-    private func loadTopIdentifiers(limit: Int, using connection: MySQLConnection, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
-        
+//    public func validateIdentifier(_ identifier: String, onComplete: @escaping (Result<String, Error>) -> Void) {
+//        self.database.getConnection().whenComplete { result in
+//            switch result {
+//            case .failure(let error):
+//                onComplete(.failure(error))
+//            case .success(let connection):
+//                self.validateIdentifier(identifier, using: connection, onComplete: onComplete)
+//            }
+//        }
+//    }
+//
+//    func validateIdentifier(_ identifier: String, using connection: MySQLConnection, onComplete: @escaping (Result<String, Error>) -> Void) {
+//
+//        let query = "SELECT `target` FROM `identifier` WHERE `identifier`=? LIMIT 1"
+//        connection.query(query, [.init(string: identifier)]).whenComplete { (result) in
+//            switch result {
+//            case .failure(let error):
+//                onComplete(.failure(error))
+//            case .success(let rows):
+//                guard let row = rows.first else {
+//                    return
+//                }
+//                do {
+//                    onComplete(.success(try row.decode(column: "target", as: String.self)))
+//                } catch {
+//                    onComplete(.failure(error))
+//                }
+//            }
+//        }
+//
+//    }
+//
+//    public func registerVisit(_ identifier: String) {
+//        self.database.getConnection().whenComplete { result in
+//            switch result {
+//            case .failure(_):
+//                break
+//            case .success(let connection):
+//                self.registerVisit(identifier, using: connection)
+//            }
+//        }
+//    }
+//
+//    func registerVisit(_ identifier: String, using connection: MySQLConnection) {
+//        let query = "INSERT INTO `visit` (`identifier`, `date`) SELECT `id` AS identifier now() as date FROM `identifier` WHERE `identifier`.`identifier`=?"
+//        connection.query(query, [.init(string: identifier)]).whenSuccess { _ in
+//            return
+//        }
+//    }
+//
+//}
+//
+//// MARK: - Top identifiers
+//public extension BanterIdentifierManager {
+//
+//    struct TopIdentifier {
+//        let identifier: String
+//        let viewCount: Int64
+//    }
+//
+//    func loadTopIdentifiers(limit: Int = 10, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
+//        self.database.getConnection().whenComplete { result in
+//            switch result {
+//            case .failure(let error):
+//                onComplete(.failure(error))
+//            case .success(let connection):
+//                self.loadTopIdentifiers(limit: limit, using: connection, onComplete: onComplete)
+//            }
+//        }
+//    }
+//
+//    private func loadTopIdentifiers(limit: Int, using connection: MySQLConnection, onComplete: @escaping (Result<[TopIdentifier], Error>) -> Void) {
+//
 //        let identifierTable = IdentifierTable()
 //        let visitsTable = VisitTable()
 //
@@ -152,7 +128,7 @@ public extension BanterIdentifierManager {
 //            }
 //
 //        }
-        
-    }
-    
+//
+//    }
+
 }

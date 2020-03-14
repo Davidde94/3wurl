@@ -7,39 +7,24 @@
 
 import Foundation
 import MySQLKit
+import FluentKit
 
-public class Database {
-    
-    private static let rawConfiguration: Configuration = {
-        do {
-            let file = #file
-            let url = URL(fileURLWithPath: file)
-                .deletingLastPathComponent()
-                .deletingLastPathComponent()
-                .deletingLastPathComponent()
-                .appendingPathComponent("Configuration")
-                .appendingPathComponent("database.json")
-            let data = try Data(contentsOf: url)
-            return try JSONDecoder().decode(Configuration.self, from: data)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }()
-    
-    private static let configuration = MySQLConfiguration(
-        hostname: rawConfiguration.host,
-        port: rawConfiguration.port,
-        username: rawConfiguration.user,
-        password: rawConfiguration.password,
-        database: rawConfiguration.database
-    )
-    
-    private static let connectionPool = MySQLConnectionSource(configuration: configuration)
-    private static let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
-    private static let logger = Logger(label: "xyz.3wurl.WurlStore")
-    
-    public static func getConnection() -> EventLoopFuture<MySQLConnection> {
-        return connectionPool.makeConnection(logger: logger, on: eventLoopGroup.next())
-    }
-    
-}
+//public class MyDatabase {
+//    
+//    let configuration: MySQLConfiguration
+//    private let connectionSource: MySQLConnectionSource
+//    private let eventLoopGroup: MultiThreadedEventLoopGroup
+//    private let logger: Logger
+//    
+//    public init(configuration: MySQLConfiguration) {
+//        self.configuration = configuration
+//        self.connectionSource = MySQLConnectionSource(configuration: configuration)
+//        self.eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+//        self.logger = Logger(label: "xyz.3wurl.WurlStore")
+//    }
+//    
+//    public func getConnection() -> EventLoopFuture<MySQLConnection> {
+//        return connectionSource.makeConnection(logger: logger, on: eventLoopGroup.next())
+//    }
+//    
+//}
