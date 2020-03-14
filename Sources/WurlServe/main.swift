@@ -15,6 +15,15 @@ try LoggingSystem.bootstrap(from: &env)
 let app = Application(env)
 defer { app.shutdown() }
 
+app.databases.use(.mysql(
+    hostname: "127.0.0.1",
+    port: 3306,
+    username: "root",
+    password: "not_a_real_password",
+    database: "3wurl",
+    tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
+), as: .mysql, isDefault: true)
+
 app.get("") { (request: Request) in
     request.view.render("index.leaf")
 }
