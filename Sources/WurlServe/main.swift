@@ -63,7 +63,7 @@ app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> Ev
     }
     let decoded = try! JSONDecoder().decode(CreateWurlRequest.self, from: data)
     return BanterIdentifierManager.createIdentifier(for: decoded.url, on: request.db).map { wurl in
-        return CreateWurlResponse(url: URL(string: "https://3wl.uk/\(wurl.identifier)")!)
+        return CreateWurlResponse(url: config.baseTarget.appendingPathComponent(wurl.identifier))
     }
 }
 
