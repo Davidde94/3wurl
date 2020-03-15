@@ -15,6 +15,20 @@ try LoggingSystem.bootstrap(from: &env)
 let app = Application(env)
 defer { app.shutdown() }
 
+struct Configuration: Decodable {
+    var host: String
+    var port: Int
+    var baseTarget: URL
+}
+
+let configURL = URL(fileURLWithPath: #file)
+    .deletingLastPathComponent()
+    .appendingPathComponent("Configuration", isDirectory: true)
+    .appendingPathComponent("host.json")
+
+let configData = try Data(contentsOf: configURL)
+let config = try JSONDecoder().decode(Configuration.self, from: configData)
+
 app.databases.use(.mysql(
     hostname: "127.0.0.1",
     port: 3306,
@@ -49,10 +63,12 @@ app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> Ev
     }
     let decoded = try! JSONDecoder().decode(CreateWurlRequest.self, from: data)
     return BanterIdentifierManager.createIdentifier(for: decoded.url, on: request.db).map { wurl in
-        return CreateWurlResponse(url: URL(string: "https://3wl.uk/\(wurl.identifier)")!)
+        return CreateWurlResponse(url: config.baseTarget.appendingPathComponent(wurl.identifier))
     }
 }
 
 app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+
+app.server.configuration.port = config.port
 
 try app.run()
