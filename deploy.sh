@@ -10,4 +10,4 @@ git reset --hard origin/master
 # compile and run
 swift package resolve
 swift build -c release
-sudo service banterurl restart
+sudo service 3wurl restart
