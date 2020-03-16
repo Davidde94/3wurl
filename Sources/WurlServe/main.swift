@@ -76,9 +76,16 @@ app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> Ev
     guard let data = request.body.data else {
         throw Abort(.badRequest, reason: "Missing JSON payload", suggestedFixes: ["Make sure to send a valid JSON-encoded payload"])
     }
-    let decoded = try! JSONDecoder().decode(CreateWurlRequest.self, from: data)
-    return BanterIdentifierManager.createIdentifier(for: decoded.url, on: request.db).map { wurl in
-        return CreateWurlResponse(url: config.baseTarget.appendingPathComponent(wurl.identifier))
+    
+    do {
+        let decoded = try JSONDecoder().decode(CreateWurlRequest.self, from: data)
+        return BanterIdentifierManager.createIdentifier(for: decoded.url, on: request.db).map { wurl in
+            return CreateWurlResponse(url: config.baseTarget.appendingPathComponent(wurl.identifier))
+        }
+    } catch let error as DecodingError {
+        throw Abort(.badRequest, reason: "The JSON was invalid: \(error)")
+    } catch {
+        throw Abort(.badRequest, reason: "The data you sent wasn't valid, but we aren't sure why.")
     }
 }
 
