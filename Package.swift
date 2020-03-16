@@ -4,7 +4,9 @@
 import PackageDescription
 
 let products: [Product] = [
-    .executable(name: "WurlServe", targets: ["WurlServe"])
+    .executable(name: "WurlServe", targets: ["WurlServe"]),
+    .executable(name: "WurlAPI", targets: ["WurlAPI"]),
+    .executable(name: "WurlRedirect", targets: ["WurlRedirect"]),
 ]
 
 let dependencies: [Package.Dependency] = [
@@ -22,6 +24,12 @@ let targets: [Target] = [
         "Wordset"
     ]),
     .target(name: "WurlRedirect", dependencies: [
+        .product(name: "Vapor", package: "vapor"),
+        .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
+        .product(name: "Fluent", package: "fluent"),
+        "WurlStore",
+    ]),
+    .target(name: "WurlAPI", dependencies: [
         .product(name: "Vapor", package: "vapor"),
         .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
         .product(name: "Fluent", package: "fluent"),

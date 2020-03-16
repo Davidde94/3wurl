@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by David Evans on 10/03/2020.
 //
@@ -53,8 +53,36 @@ app.databases.use(.mysql(
     tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
 ), as: .mysql, isDefault: true)
 
-app.get("") { (request: Request) in
-    request.view.render("index.leaf")
+struct CreateWurlRequest: Decodable {
+    var url: URL
+}
+
+struct CreateWurlResponse: ResponseEncodable {
+    
+    func encodeResponse(for request: Request) -> EventLoopFuture<Response> {
+        let response = Response()
+        try! response.content.encode(["url":url], as: .json)
+        return response.encodeResponse(status: .created, headers: HTTPHeaders([]), for: request)
+    }
+    
+    var url: URL
+}
+
+app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> EventLoopFuture<CreateWurlResponse> in
+    guard let data = request.body.data else {
+        throw Abort(.badRequest, reason: "Missing JSON payload", suggestedFixes: ["Make sure to send a valid JSON-encoded payload"])
+    }
+    
+    do {
+        let decoded = try JSONDecoder().decode(CreateWurlRequest.self, from: data)
+        return BanterIdentifierManager.createIdentifier(for: decoded.url, on: request.db).map { wurl in
+            return CreateWurlResponse(url: config.baseTarget.appendingPathComponent(wurl.identifier))
+        }
+    } catch let error as DecodingError {
+        throw Abort(.badRequest, reason: "The JSON was invalid: \(error)")
+    } catch {
+        throw Abort(.badRequest, reason: "The data you sent wasn't valid, but we aren't sure why.")
+    }
 }
 
 app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
