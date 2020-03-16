@@ -21,6 +21,14 @@ struct Configuration: Decodable {
     var baseTarget: URL
 }
 
+struct DatabaseConfiguration: Decodable {
+    var host: String
+    var port: Int
+    var user: String
+    var password: String
+    var database: String
+}
+
 let configURL = URL(fileURLWithPath: #file)
     .deletingLastPathComponent()
     .appendingPathComponent("Configuration", isDirectory: true)
@@ -29,12 +37,19 @@ let configURL = URL(fileURLWithPath: #file)
 let configData = try Data(contentsOf: configURL)
 let config = try JSONDecoder().decode(Configuration.self, from: configData)
 
+let databaseConfigURL = URL(fileURLWithPath: #file)
+    .deletingLastPathComponent()
+    .appendingPathComponent("Configuration", isDirectory: true)
+    .appendingPathComponent("database.json")
+let databaseConfigData = try Data(contentsOf: databaseConfigURL)
+let databaseConfig = try JSONDecoder().decode(DatabaseConfiguration.self, from: databaseConfigData)
+
 app.databases.use(.mysql(
-    hostname: "127.0.0.1",
-    port: 3306,
-    username: "root",
-    password: "not_a_real_password",
-    database: "3wurl",
+    hostname: databaseConfig.host,
+    port: databaseConfig.port,
+    username: databaseConfig.user,
+    password: databaseConfig.password,
+    database: databaseConfig.database,
     tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
 ), as: .mysql, isDefault: true)
 
