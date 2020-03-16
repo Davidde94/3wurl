@@ -18,5 +18,9 @@ public enum BanterIdentifierManager {
         let wurl = Wurl(identifier: identifier, target: url, dateCreated: Date())
         return wurl.save(on: database).map { wurl }
     }
+    
+    public static func validateIdentifier(_ identifier: String, on database: Database) -> EventLoopFuture<Wurl?> {
+        return Wurl.query(on: database).filter(\.$identifier, .equal, identifier).first()
+    }
 
 }

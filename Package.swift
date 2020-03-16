@@ -21,6 +21,12 @@ let targets: [Target] = [
         "WurlStore",
         "Wordset"
     ]),
+    .target(name: "WurlRedirect", dependencies: [
+        .product(name: "Vapor", package: "vapor"),
+        .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
+        .product(name: "Fluent", package: "fluent"),
+        "WurlStore",
+    ]),
     .target(
         name: "WurlStore",
         dependencies: [
