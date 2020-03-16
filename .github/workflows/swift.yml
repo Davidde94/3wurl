@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: davidde94/3wurl:latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
