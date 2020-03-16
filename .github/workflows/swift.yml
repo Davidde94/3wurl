@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    container: 'docker://davidde94:3wurl:latest'
+    container: 'docker://davidde94/3wurl:latest'
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
