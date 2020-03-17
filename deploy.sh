@@ -11,3 +11,5 @@ git reset --hard origin/master
 swift package resolve
 swift build -c release
 sudo service 3wurl restart
+sudo service 3wurlRedirect restart
+sudo service 3wurlAPI restart
