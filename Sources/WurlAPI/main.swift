@@ -85,7 +85,7 @@ app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> Ev
     }
 }
 
-app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+app.middleware.use(CORSMiddleware(configuration: CORSMiddleware.Configuration(allowedOrigin: .all, allowedMethods: [.POST], allowedHeaders: [.accept, .contentType])))
 
 app.server.configuration.port = config.port
 

@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: "POST",
-      url: "/create",
+      url: $("#mainForm").attr("action"),
       dataType: "json",
       contentType: "application/json",
       data: json

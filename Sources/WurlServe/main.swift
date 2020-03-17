@@ -8,6 +8,7 @@
 import Vapor
 import WurlStore
 import Fluent
+import Leaf
 import MySQLKit
 
 var env = try Environment.detect()
@@ -18,7 +19,7 @@ defer { app.shutdown() }
 struct Configuration: Decodable {
     var host: String
     var port: Int
-    var baseTarget: URL
+    var apiTarget: URL
 }
 
 struct DatabaseConfiguration: Decodable {
@@ -53,8 +54,12 @@ app.databases.use(.mysql(
     tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
 ), as: .mysql, isDefault: true)
 
+app.views.use { (application) -> (ViewRenderer) in
+    application.leaf.renderer
+}
+
 app.get("") { (request: Request) in
-    request.view.render("index.leaf")
+    request.view.render("index.leaf", ["apiTarget" : "\"\(config.apiTarget)/create\""])
 }
 
 app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
