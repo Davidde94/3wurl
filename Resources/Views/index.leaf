@@ -31,7 +31,7 @@
         </div>
         <div class="row justify-content-center mt-5 pt-5">
           <div class="col">
-            <form id="mainForm">
+            <form id="mainForm" action=#(apiTarget)>
               <input type="url" name="url" placeholder="Some URL" />
             </form>
           </div>
