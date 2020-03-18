@@ -57,6 +57,7 @@ app.get("*") { (request: Request) -> EventLoopFuture<Response> in
         guard let wurl = wurl  else {
             return .failure(Abort(.notFound))
         }
+        BanterIdentifierManager.registerVisit(for: wurl.identifier, on: request.db)
         return .success(Response(status: .temporaryRedirect, headers: HTTPHeaders([
             ("location", wurl.target.absoluteString)
         ])))
