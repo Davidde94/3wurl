@@ -64,6 +64,5 @@ app.get("*") { (request: Request) -> EventLoopFuture<Response> in
     })
 }
 
-app.server.configuration.port = config.port
-
+try app.server.start(hostname: config.host, port: config.port)
 try app.run()

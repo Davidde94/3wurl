@@ -87,6 +87,5 @@ app.on(.POST, "create", body: .collect(maxSize: 256)) { (request: Request) -> Ev
 
 app.middleware.use(CORSMiddleware(configuration: CORSMiddleware.Configuration(allowedOrigin: .all, allowedMethods: [.POST], allowedHeaders: [.accept, .contentType])))
 
-app.server.configuration.port = config.port
-
+try app.server.start(hostname: config.host, port: config.port)
 try app.run()
