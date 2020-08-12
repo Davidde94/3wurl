@@ -10,10 +10,10 @@ let products: [Product] = [
 ]
 
 let dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/vapor/vapor", .exact("4.0.0-rc.3.4")),
-    .package(url: "https://github.com/vapor/fluent.git", from: "4.0.0-rc.1"),
-    .package(url: "https://github.com/vapor/fluent-mysql-driver", .exact("4.0.0-rc.1.1")),
-    .package(url: "https://github.com/vapor/leaf", .exact("4.0.0-rc.1.1")),
+    .package(url: "https://github.com/vapor/vapor", from: "4.0.0"),
+    .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
+    .package(url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
+    .package(url: "https://github.com/vapor/leaf", .exact("4.0.0-rc.1.4")),
 ]
 
 let targets: [Target] = [
