@@ -23,4 +23,4 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
-        script: cd 3wurl && git reset --hard master && git pull && swift test
+        script: cd 3wurl && git reset --hard master && git pull && which swift && swift test
