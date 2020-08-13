@@ -1,4 +1,4 @@
-name: Deploy
+name: Build, Test, Deploy
 
 on:
   push:
@@ -14,3 +14,5 @@ jobs:
       run: swift build
     - name: Run tests
       run: swift test --enable-test-discovery
+    - name: Deploy
+      run: 
