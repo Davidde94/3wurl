@@ -1,6 +1,8 @@
 name: Build, Test, Deploy
 
 on:
+  pull_request:
+    branches: [ master ]
   push:
     branches: [ master ]
 
@@ -15,4 +17,9 @@ jobs:
     - name: Run tests
       run: swift test --enable-test-discovery
     - name: Deploy
-      run: 
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: cd ${{ secrets.PROJECT_PATH }} && git reset --hard master && git pull && swift test
