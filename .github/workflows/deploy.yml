@@ -19,4 +19,10 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
-        script: cd 3wurl && git pull && which swift && swift build -c release
+        script: |
+          cd 3wurl
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< ~/.ssh/3wurl
+          git reset --hard master
+          git pull
+          swift build -c release
