@@ -22,7 +22,7 @@ jobs:
         script: |
           cd 3wurl
           eval "$(ssh-agent -s)"
-          ssh-add - <<< ~/.ssh/3wurl
+          ssh-add -K ~/.ssh/3wurl
           git reset --hard master
           git pull
           swift build -c release
