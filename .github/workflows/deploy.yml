@@ -26,3 +26,6 @@ jobs:
           git reset --hard master
           git pull
           /usr/local/bin/swift/usr/bin/swift build -c release -v
+          sudo service 3wurl restart
+          sudo service 3wurlAPI restart
+          sudo service 3wurlRedirect restart
