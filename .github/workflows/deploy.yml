@@ -25,4 +25,4 @@ jobs:
           ssh-add ~/.ssh/3wurl
           git reset --hard master
           git pull
-          /usr/local/bin/swift/usr/bin/swift build -c release
+          /usr/local/bin/swift/usr/bin/swift build -c release -v
