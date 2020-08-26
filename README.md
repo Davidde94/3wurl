@@ -1,4 +1,4 @@
 # 3wurl
 A URL-shortening service with a twist.
 
-![Swift](https://github.com/Davidde94/3wurl/workflows/Swift/badge.svg?branch=master)
+![Build and Test](https://github.com/Davidde94/3wurl/workflows/Build%20and%20Test/badge.svg)
