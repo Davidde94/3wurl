@@ -1,1 +1,1 @@
-FROM swift:5.2-bionic
+FROM swift:5.3-focal
