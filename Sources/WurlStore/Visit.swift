@@ -6,25 +6,17 @@
 //
 
 import Foundation
-import FluentMySQLDriver
+import MySQLKit
 import Vapor
 
-final public class Visit: Model, Content {
-    
-    public typealias IDValue = Int
-
-    public static let schema = "visit"
-    
-    @ID(custom: "id")           public var id: IDValue?
-    @Field(key: "date")         public var date: Date
-    @Parent(key: "identifier")  public var wurl: Wurl
-
-    public init() {
-        
-    }
-    
-    public init(identifier: Int, date: Date) {
-        self.date = date
-        self.$wurl.id = identifier
-    }
-}
+//final public class Visit: Content {
+//
+//    public static let schema = "visit"
+//    
+//    public var date: Date
+//    public var wurl: Wurl
+//    
+//    public init(identifier: Int, date: Date) {
+//        self.date = date
+//    }
+//}

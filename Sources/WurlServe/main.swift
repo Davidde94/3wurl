@@ -7,7 +7,6 @@
 
 import Vapor
 import WurlStore
-import Fluent
 import Leaf
 import MySQLKit
 
@@ -22,37 +21,9 @@ struct Configuration: Decodable {
     var apiTarget: URL
 }
 
-struct DatabaseConfiguration: Decodable {
-    var host: String
-    var port: Int
-    var user: String
-    var password: String
-    var database: String
-}
-
-let configURL = URL(fileURLWithPath: #file)
-    .deletingLastPathComponent()
-    .appendingPathComponent("Configuration", isDirectory: true)
-    .appendingPathComponent("host.json")
-
+let configURL = Bundle.module.resourceURL!.appendingPathComponent("host.json")
 let configData = try Data(contentsOf: configURL)
 let config = try JSONDecoder().decode(Configuration.self, from: configData)
-
-let databaseConfigURL = URL(fileURLWithPath: #file)
-    .deletingLastPathComponent()
-    .appendingPathComponent("Configuration", isDirectory: true)
-    .appendingPathComponent("database.json")
-let databaseConfigData = try Data(contentsOf: databaseConfigURL)
-let databaseConfig = try JSONDecoder().decode(DatabaseConfiguration.self, from: databaseConfigData)
-
-app.databases.use(.mysql(
-    hostname: databaseConfig.host,
-    port: databaseConfig.port,
-    username: databaseConfig.user,
-    password: databaseConfig.password,
-    database: databaseConfig.database,
-    tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
-), as: .mysql, isDefault: true)
 
 app.views.use { (application) -> (ViewRenderer) in
     application.leaf.renderer
@@ -64,5 +35,10 @@ app.get("") { (request: Request) in
 
 app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
-try app.server.start(hostname: config.host, port: config.port)
-try app.run()
+do {
+//    try app.server.start(address: .hostname(config.host, port: config.port))
+    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
+    try app.run()
+} catch {
+    print("\(error)")
+}
