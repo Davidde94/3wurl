@@ -21,7 +21,7 @@ let targets: [Target] = [
         .product(name: "Leaf", package: "leaf"),
         "WurlStore",
         "Wordset"
-    ],resources: [.copy("host.json")]
+    ],resources: [.copy("Resources/host.json")]
             
            ),
     .target(name: "WurlRedirect", dependencies: [
@@ -30,8 +30,8 @@ let targets: [Target] = [
         "WurlStore",
     ],
             resources: [
-                .copy("host.json"),
-                .copy("database.json"),
+                .copy("Resources/host.json"),
+                .copy("Resources/database.json"),
             ]
             ),
     .target(
@@ -41,7 +41,7 @@ let targets: [Target] = [
         .product(name: "MySQLKit", package: "mysql-kit"),
         "WurlStore",
     ],
-            resources: [.copy("host.json"), .copy("database.json")]
+            resources: [.copy("Resources/host.json"), .copy("Resources/database.json")]
             
             ),
     .target(
