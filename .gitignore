@@ -6,3 +6,5 @@ xcuserdata/
 Configuration
 .swiftpm
 Package.resolved
+**/host.json
+**/database.json

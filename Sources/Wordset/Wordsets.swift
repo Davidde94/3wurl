@@ -23,11 +23,7 @@ enum Wordsets {
     
     private static func loadWords(fileName: String) -> Set<String> {
         do {
-            print(#file)
-            let fileURL = URL(fileURLWithPath: #file)
-                .deletingLastPathComponent()
-                .appendingPathComponent("Wordsets")
-                .appendingPathComponent(fileName)
+            let fileURL = Bundle.module.resourceURL!.appendingPathComponent(fileName)
             let data = try Data(contentsOf: fileURL)
             let array = try JSONDecoder().decode([String].self, from: data)
             return Set(array)

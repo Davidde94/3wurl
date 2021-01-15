@@ -7,7 +7,6 @@
 
 import Vapor
 import WurlStore
-import Fluent
 import MySQLKit
 
 var env = try Environment.detect()
@@ -28,41 +27,41 @@ struct DatabaseConfiguration: Decodable {
     var database: String
 }
 
-let configURL = URL(fileURLWithPath: #file)
-    .deletingLastPathComponent()
-    .appendingPathComponent("Configuration", isDirectory: true)
-    .appendingPathComponent("host.json")
+let configURL = Bundle.module.resourceURL!.appendingPathComponent("host.json")
 let configData = try Data(contentsOf: configURL)
 let config = try JSONDecoder().decode(Configuration.self, from: configData)
 
-let databaseConfigURL = URL(fileURLWithPath: #file)
-    .deletingLastPathComponent()
-    .appendingPathComponent("Configuration", isDirectory: true)
-    .appendingPathComponent("database.json")
+let databaseConfigURL = Bundle.module.resourceURL!.appendingPathComponent("database.json")
 let databaseConfigData = try Data(contentsOf: databaseConfigURL)
 let databaseConfig = try JSONDecoder().decode(DatabaseConfiguration.self, from: databaseConfigData)
 
-app.databases.use(.mysql(
-    hostname: databaseConfig.host,
-    port: databaseConfig.port,
-    username: databaseConfig.user,
-    password: databaseConfig.password,
-    database: databaseConfig.database,
-    tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
-), as: .mysql)
+let mysqlConfig = MySQLConfiguration(
+                                     hostname: databaseConfig.host,
+                                     port: databaseConfig.port,
+                                     username: databaseConfig.user,
+                                     password: databaseConfig.password,
+                                     database: databaseConfig.database,
+                                     tlsConfiguration: .forClient(minimumTLSVersion: .tlsv12, certificateVerification: .none)
+                                     )
+let dbConnectionPool = EventLoopGroupConnectionPool(source: MySQLConnectionSource(configuration: mysqlConfig), on: app.eventLoopGroup)
 
 app.get("*") { (request: Request) -> EventLoopFuture<Response> in
     let identifier = String(request.url.path.dropFirst())
-    return BanterIdentifierManager.validateIdentifier(identifier, on: request.db).flatMapResult({ (wurl) -> Result<Response, Error> in
+    return BanterIdentifierManager.validateIdentifier(identifier, using: dbConnectionPool).flatMapResult({ (wurl) -> Result<Response, Error> in
         guard let wurl = wurl  else {
             return .failure(Abort(.notFound))
         }
-        BanterIdentifierManager.registerVisit(for: wurl.identifier, on: request.db)
+//        BanterIdentifierManager.registerVisit(for: wurl.identifier, on: request.db)
         return .success(Response(status: .temporaryRedirect, headers: HTTPHeaders([
             ("location", wurl.target.absoluteString)
         ])))
     })
 }
 
-try app.server.start(hostname: config.host, port: config.port)
-try app.run()
+do {
+//    try app.server.start(address: .hostname(config.host, port: config.port))
+    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
+    try app.run()
+} catch {
+    print("\(error)")
+}

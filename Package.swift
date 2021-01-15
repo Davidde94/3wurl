@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -10,10 +10,9 @@ let products: [Product] = [
 ]
 
 let dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/vapor/vapor", from: "4.0.0"),
-    .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
-    .package(url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
-    .package(url: "https://github.com/vapor/leaf", .exact("4.0.0-rc.1.4")),
+    .package(url: "https://github.com/vapor/vapor", from: "4.36.0"),
+    .package(url: "https://github.com/vapor/mysql-kit", from: "4.1.0"),
+    .package(url: "https://github.com/vapor/leaf", from: "4.0.0"),
 ]
 
 let targets: [Target] = [
@@ -22,44 +21,58 @@ let targets: [Target] = [
         .product(name: "Leaf", package: "leaf"),
         "WurlStore",
         "Wordset"
-    ]),
+    ],resources: [.copy("Resources/host.json")]
+            
+           ),
     .target(name: "WurlRedirect", dependencies: [
         .product(name: "Vapor", package: "vapor"),
-        .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
-        .product(name: "Fluent", package: "fluent"),
+        .product(name: "MySQLKit", package: "mysql-kit"),
         "WurlStore",
-    ]),
-    .target(name: "WurlAPI", dependencies: [
+    ],
+            resources: [
+                .copy("Resources/host.json"),
+                .copy("Resources/database.json"),
+            ]
+            ),
+    .target(
+            name: "WurlAPI",
+            dependencies: [
         .product(name: "Vapor", package: "vapor"),
-        .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
-        .product(name: "Fluent", package: "fluent"),
+        .product(name: "MySQLKit", package: "mysql-kit"),
         "WurlStore",
-    ]),
+    ],
+            resources: [.copy("Resources/host.json"), .copy("Resources/database.json")]
+            
+            ),
     .target(
-        name: "WurlStore",
-        dependencies: [
-            .product(name: "Vapor", package: "vapor"),
-            .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
-            .product(name: "Fluent", package: "fluent"),
-            "Wordset"
-        ]
-    ),
+            name: "WurlStore",
+            dependencies: [
+        .product(name: "Vapor", package: "vapor"),
+        .product(name: "MySQLKit", package: "mysql-kit"),
+        "Wordset"
+    ]
+            ),
     .target(
-        name: "Wordset",
-        dependencies: [.product(name: "Vapor", package: "vapor")]
-    ),
+            name: "Wordset",
+            dependencies: [.product(name: "Vapor", package: "vapor")],
+                    resources: [
+                        .copy("Resources/Wordset1.json"),
+                        .copy("Resources/Wordset2.json"),
+                        .copy("Resources/Wordset3.json")
+                    ]
+            ),
     .testTarget(
-        name: "WordsetTests",
-        dependencies: ["Wordset"]
-    ),
+                name: "WordsetTests",
+                dependencies: ["Wordset"]
+                ),
 ]
 
 let package = Package(
-    name: "3wurl",
-    platforms: [
-        .macOS(.v10_15),
-    ],
-    products: products,
-    dependencies: dependencies,
-    targets: targets
-)
+                      name: "3wurl",
+                      platforms: [
+    .macOS(.v10_15),
+],
+                      products: products,
+                      dependencies: dependencies,
+                      targets: targets
+                      )
