@@ -21,24 +21,24 @@ struct Configuration: Decodable {
     var apiTarget: URL
 }
 
-let configURL = Bundle.module.resourceURL!.appendingPathComponent("host.json")
-let configData = try Data(contentsOf: configURL)
-let config = try JSONDecoder().decode(Configuration.self, from: configData)
-
-app.views.use { (application) -> (ViewRenderer) in
-    application.leaf.renderer
-}
-
-app.get("") { (request: Request) in
-    request.view.render("index.leaf", ["apiTarget" : "\"\(config.apiTarget)/create\""])
-}
-
-app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
-do {
-//    try app.server.start(address: .hostname(config.host, port: config.port))
-    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
-    try app.run()
-} catch {
-    print("\(error)")
-}
+//let configURL = Bundle.module.resourceURL!.appendingPathComponent("host.json")
+//let configData = try Data(contentsOf: configURL)
+//let config = try JSONDecoder().decode(Configuration.self, from: configData)
+//
+//app.views.use { (application) -> (ViewRenderer) in
+//    application.leaf.renderer
+//}
+//
+//app.get("") { (request: Request) in
+//    request.view.render("index.leaf", ["apiTarget" : "\"\(config.apiTarget)/create\""])
+//}
+//
+//app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+//
+//do {
+////    try app.server.start(address: .hostname(config.host, port: config.port))
+//    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
+//    try app.run()
+//} catch {
+//    print("\(error)")
+//}
