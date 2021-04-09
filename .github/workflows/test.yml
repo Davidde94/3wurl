@@ -1,4 +1,4 @@
-name: Build and Test
+name: Test
 
 on:
   push:
@@ -8,11 +8,8 @@ on:
 
 jobs:
   test-linux:
-    container: 'docker://davidde94/3wurl:2.1'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: swift build
     - name: Run tests
-      run: swift test --enable-test-discovery
+      run: swift test -c release --enable-test-discovery
