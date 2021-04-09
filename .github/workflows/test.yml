@@ -7,15 +7,15 @@ on:
     branches: [ master ]
 
 jobs:
-  test-linux:
+  test-ubuntu:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
       run: swift test -c release --enable-test-discovery
-    test-linux:
-      runs-on: macos-11.0
-      steps:
-      - uses: actions/checkout@v2
-      - name: Run tests
-        run: swift test -c release --enable-test-discovery
+  test-macos:
+    runs-on: macos-11.0
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: swift test -c release --enable-test-discovery
