@@ -13,9 +13,3 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run tests
       run: swift test -c release --enable-test-discovery
-  test-macos:
-    runs-on: macos-10_15
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: swift test -c release --enable-test-discovery
