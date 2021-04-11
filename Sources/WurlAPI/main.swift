@@ -80,10 +80,8 @@ struct DatabaseConfiguration: Decodable {
 //
 //app.middleware.use(CORSMiddleware(configuration: CORSMiddleware.Configuration(allowedOrigin: .all, allowedMethods: [.POST], allowedHeaders: [.accept, .contentType])))
 //
-//do {
-////    try app.server.start(address: .hostname(config.host, port: config.port))
-//    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
-//    try app.run()
-//} catch {
-//    print("\(error)")
-//}
+do {
+    try app.run()
+} catch {
+    print("\(error)")
+}

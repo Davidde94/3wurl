@@ -58,10 +58,8 @@ struct DatabaseConfiguration: Decodable {
 //    })
 //}
 //
-//do {
-////    try app.server.start(address: .hostname(config.host, port: config.port))
-//    app.http.server.configuration.address = BindAddress.hostname(config.host, port: config.port)
-//    try app.run()
-//} catch {
-//    print("\(error)")
-//}
+do {
+    try app.run()
+} catch {
+    print("\(error)")
+}
