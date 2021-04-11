@@ -2,7 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
-
+ 
 let products: [Product] = [
     .executable(name: "WurlServe", targets: ["WurlServe"]),
     .executable(name: "WurlAPI", targets: ["WurlAPI"]),
@@ -22,7 +22,7 @@ let targets: [Target] = [
         "WurlStore",
         "Wordset"
     ],resources: [.copy("Resources/host.json")]
-            
+
            ),
     .target(name: "WurlRedirect", dependencies: [
         .product(name: "Vapor", package: "vapor"),
@@ -42,7 +42,7 @@ let targets: [Target] = [
         "WurlStore",
     ],
             resources: [.copy("Resources/host.json"), .copy("Resources/database.json")]
-            
+
             ),
     .target(
             name: "WurlStore",
